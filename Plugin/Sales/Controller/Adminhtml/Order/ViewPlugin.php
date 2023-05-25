@@ -98,7 +98,7 @@ class ViewPlugin
         $result = $proceed();
 
         $order = $this->getOrder();
-        if(!$order){
+        if (!$order) {
             return $result;
         }
 

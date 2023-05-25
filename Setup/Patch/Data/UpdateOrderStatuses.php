@@ -44,8 +44,8 @@ class UpdateOrderStatuses implements DataPatchInterface
     public function __construct(
         ModuleDataSetupInterface $moduleDataSetup,
         OrderRepositoryInterface $orderRepository,
-        SearchCriteriaBuilder $searchCriteriaBuilder,
-        LoggerInterface $logger
+        SearchCriteriaBuilder    $searchCriteriaBuilder,
+        LoggerInterface          $logger
     ) {
         $this->moduleDataSetup = $moduleDataSetup;
         $this->orderRepository = $orderRepository;
@@ -65,7 +65,7 @@ class UpdateOrderStatuses implements DataPatchInterface
         $ordersList = $this->orderRepository->getList($searchCriteria);
 
         try {
-            foreach ($ordersList->getItems() as $order){
+            foreach ($ordersList->getItems() as $order) {
                 $order->setStatus(AddOpenTagOrderStatuses::STATUS_CODE);
                 $this->orderRepository->save($order);
             }
