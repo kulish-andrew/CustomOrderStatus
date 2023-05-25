@@ -7,6 +7,7 @@ use Magento\Backend\Model\UrlInterface;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Message\ManagerInterface;
 use Magento\Framework\Registry;
+use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Sales\Api\OrderRepositoryInterface;
 use Magento\Sales\Controller\Adminhtml\Order\View;
 use Magento\Framework\Controller\ResultFactory;
@@ -96,7 +97,11 @@ class ViewPlugin
 
         $result = $proceed();
 
-        $order = $this->coreRegistry->registry('current_order');
+        $order = $this->getOrder();
+        if(!$order){
+            return $result;
+        }
+
         $orderStatus = $order->getStatus();
         if (
             $orderStatus === AddOpenTagOrderStatuses::STATUS_CODE
@@ -146,5 +151,13 @@ class ViewPlugin
         $redirect->setUrl($this->getRedirectUrl());
         $this->messageManager->addErrorMessage(__('You don\'t have permission to see this order details.'));
         return $redirect;
+    }
+
+    /**
+     * @return OrderInterface|null
+     */
+    private function getOrder(): ?OrderInterface
+    {
+        return $this->coreRegistry->registry('current_order');
     }
 }
