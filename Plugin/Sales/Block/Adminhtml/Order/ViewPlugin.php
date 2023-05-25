@@ -89,7 +89,8 @@ class ViewPlugin
      * @param string $orderState
      * @return bool
      */
-    private function isOrderFinished(string $orderState): bool{
+    private function isOrderFinished(string $orderState): bool
+    {
         $skippedOrderStates = $this->getSkippedOrderStates();
         return !isset($skippedOrderStates[$orderState]) || !$skippedOrderStates[$orderState];
     }
